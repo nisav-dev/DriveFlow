@@ -7,11 +7,11 @@ databases:
 services:
   - type: web
     name: driveflow-app
-    runtime: java
+    runtime: docker
     plan: free
     rootDir: .
-    buildCommand: mvn clean package -DskipTests
-    startCommand: java -Dserver.port=$PORT -jar target/*.jar
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
     healthCheckPath: /
     autoDeploy: true
     envVars:
