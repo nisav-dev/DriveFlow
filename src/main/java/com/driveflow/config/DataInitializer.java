@@ -98,27 +98,27 @@ public class DataInitializer implements CommandLineRunner {
 
         VehicleCategory suv = vehicleCategoryRepository.save(VehicleCategory.builder()
                 .name("SUV").description("רכבי שטח וSUV לכל שטח ולמשפחות")
-                .icon("bi-truck").minAgeRequired(23).depositAmount(new BigDecimal("1500")).build());
+                .icon("bi-truck-front-fill").minAgeRequired(23).depositAmount(new BigDecimal("1500")).build());
 
         VehicleCategory mini = vehicleCategoryRepository.save(VehicleCategory.builder()
                 .name("Mini").description("רכבים מיני קלים לחניה עירונית")
-                .icon("bi-car-front").minAgeRequired(21).depositAmount(new BigDecimal("400")).build());
+                .icon("bi-taxi-front").minAgeRequired(21).depositAmount(new BigDecimal("400")).build());
 
         VehicleCategory luxury = vehicleCategoryRepository.save(VehicleCategory.builder()
                 .name("Luxury").description("רכבי יוקרה לאירועים ונסיעות מיוחדות")
-                .icon("bi-star").minAgeRequired(25).depositAmount(new BigDecimal("3000")).build());
+                .icon("bi-gem").minAgeRequired(25).depositAmount(new BigDecimal("3000")).build());
 
         VehicleCategory van = vehicleCategoryRepository.save(VehicleCategory.builder()
                 .name("Van").description("מיניוואנים ורכבי מטען קלים")
-                .icon("bi-truck-front").minAgeRequired(23).depositAmount(new BigDecimal("1200")).build());
+                .icon("bi-bus-front-fill").minAgeRequired(23).depositAmount(new BigDecimal("1200")).build());
 
         VehicleCategory electric = vehicleCategoryRepository.save(VehicleCategory.builder()
                 .name("Electric").description("רכבים חשמליים ידידותיים לסביבה")
-                .icon("bi-lightning-charge").minAgeRequired(21).depositAmount(new BigDecimal("800")).build());
+                .icon("bi-lightning-charge-fill").minAgeRequired(21).depositAmount(new BigDecimal("800")).build());
 
         VehicleCategory premium = vehicleCategoryRepository.save(VehicleCategory.builder()
                 .name("Premium").description("רכבים פרמיום לנסיעות עסקיות")
-                .icon("bi-briefcase").minAgeRequired(23).depositAmount(new BigDecimal("2000")).build());
+                .icon("bi-award-fill").minAgeRequired(23).depositAmount(new BigDecimal("2000")).build());
 
         // ── Vehicles ───────────────────────────────────────────────────────────
         vehicleRepository.save(Vehicle.builder().licensePlate("11-222-33").make("Hyundai").model("i10")

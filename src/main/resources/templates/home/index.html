@@ -72,7 +72,7 @@
     <div class="row g-3">
       <div th:each="cat : ${categories}" class="col-6 col-md-3">
         <a th:href="@{/search(pickupBranchId=${defaultBranchId},pickupDate=${#temporals.format(pickupDefault, 'yyyy-MM-dd''T''HH:mm')},returnDate=${#temporals.format(returnDefault, 'yyyy-MM-dd''T''HH:mm')},categoryId=${cat.id})}" class="category-card">
-          <i class="bi bi-car-front category-icon-bi"></i>
+          <i class="bi category-icon-bi" th:classappend="${cat.icon}"></i>
           <div class="category-name" th:text="${cat.name}">Economy</div>
           <div class="category-price">פיקדון ₪<span th:text="${cat.depositAmount}">500</span></div>
         </a>

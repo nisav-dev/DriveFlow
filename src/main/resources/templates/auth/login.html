@@ -9,10 +9,32 @@
 
       <div class="text-center mb-4">
         <div class="d-inline-flex align-items-center gap-2 mb-3">
-          <i class="bi bi-person-circle" style="font-size:2.5rem;color:var(--primary)"></i>
+          <i class="bi bi-key-fill" style="font-size:2.5rem;color:var(--primary)"></i>
         </div>
         <h2 class="fw-800" style="color:var(--primary)">כניסה לחשבון</h2>
-        <p class="text-muted">ברוך הבא ל-DriveFlow</p>
+        <p class="text-muted">בחר את סוג המשתמש שלך להתחברות</p>
+      </div>
+
+      <!-- Role Tabs -->
+      <div class="d-flex gap-2 mb-3">
+        <button type="button" class="login-role-tab active" data-role="customer"
+                data-email="yossi@example.com" data-pass="Yossi1234"
+                onclick="selectRole(this)">
+          <i class="bi bi-person-fill"></i>
+          <span>לקוח</span>
+        </button>
+        <button type="button" class="login-role-tab" data-role="agent"
+                data-email="agent@driveflow.co.il" data-pass="Agent1234"
+                onclick="selectRole(this)">
+          <i class="bi bi-person-badge-fill"></i>
+          <span>סוכן</span>
+        </button>
+        <button type="button" class="login-role-tab" data-role="admin"
+                data-email="admin@driveflow.co.il" data-pass="Admin1234"
+                onclick="selectRole(this)">
+          <i class="bi bi-shield-fill"></i>
+          <span>מנהל</span>
+        </button>
       </div>
 
       <div class="bg-white rounded-xl p-4 shadow-card">
@@ -27,16 +49,23 @@
           <span>יצאת מהמערכת בהצלחה.</span>
         </div>
 
+        <!-- Role indicator -->
+        <div id="roleIndicator" class="d-flex align-items-center gap-2 mb-3 p-2 rounded-3" style="background:var(--light-bg)">
+          <i id="roleIcon" class="bi bi-person-fill" style="color:var(--primary)"></i>
+          <span id="roleLabel" class="fw-600" style="color:var(--primary);font-size:0.9rem">כניסת לקוח</span>
+        </div>
+
         <form th:action="@{/login}" method="post">
           <div class="mb-3">
             <label class="form-label"><i class="bi bi-envelope me-1 text-primary"></i>כתובת מייל</label>
-            <input type="email" name="username" class="form-control" placeholder="you@example.com" required autofocus>
+            <input type="email" name="username" id="loginEmail" class="form-control"
+                   placeholder="כתובת המייל שלך" required autofocus>
           </div>
           <div class="mb-3">
             <label class="form-label"><i class="bi bi-lock me-1 text-primary"></i>סיסמה</label>
-            <input type="password" name="password" class="form-control" placeholder="הסיסמה שלך" required>
+            <input type="password" name="password" id="loginPassword" class="form-control"
+                   placeholder="הסיסמה שלך" required>
           </div>
-          <!-- Remember Me -->
           <div class="mb-4 d-flex align-items-center gap-2">
             <input class="form-check-input mt-0" type="checkbox" name="remember-me" id="rememberMe">
             <label class="form-check-label small text-muted" for="rememberMe">
@@ -51,22 +80,79 @@
         <hr class="my-4">
 
         <div class="text-center">
-          <p class="text-muted mb-2" style="font-size:0.9rem">עוד לא רשום?</p>
+          <p class="text-muted mb-2" style="font-size:0.9rem">לקוח חדש ב-DriveFlow?</p>
           <a th:href="@{/register}" class="btn btn-outline-primary rounded-pill px-4">
             <i class="bi bi-person-plus me-1"></i>הרשמה חינם
           </a>
         </div>
 
         <div class="mt-4 p-3 rounded-3" style="background:var(--light-bg);font-size:0.82rem">
-          <div class="fw-700 mb-1 text-muted">חשבונות לדמו:</div>
-          <div><i class="bi bi-shield-fill text-danger me-1"></i>מנהל: admin@driveflow.co.il / Admin1234</div>
-          <div><i class="bi bi-person-badge text-warning me-1"></i>סוכן: agent@driveflow.co.il / Agent1234</div>
-          <div><i class="bi bi-person text-primary me-1"></i>לקוח: yossi@example.com / Yossi1234</div>
+          <div class="fw-700 mb-2 text-muted"><i class="bi bi-info-circle me-1"></i>חשבונות לדמו — לחץ על הטאב למילוי אוטומטי:</div>
+          <div class="mb-1"><i class="bi bi-person-fill text-primary me-1"></i><strong>לקוח:</strong> yossi@example.com / Yossi1234</div>
+          <div class="mb-1"><i class="bi bi-person-badge-fill text-warning me-1"></i><strong>סוכן:</strong> agent@driveflow.co.il / Agent1234</div>
+          <div><i class="bi bi-shield-fill text-danger me-1"></i><strong>מנהל:</strong> admin@driveflow.co.il / Admin1234</div>
         </div>
       </div>
 
     </div>
   </div>
 </div>
+
+<style>
+.login-role-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.75rem 0.5rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.login-role-tab i { font-size: 1.4rem; }
+.login-role-tab:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.login-role-tab.active {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: #fff;
+}
+</style>
+
+<script>
+const roleConfig = {
+  customer: { label: 'כניסת לקוח',  icon: 'bi-person-fill',      iconColor: 'var(--primary)' },
+  agent:    { label: 'כניסת סוכן',  icon: 'bi-person-badge-fill', iconColor: '#D97706' },
+  admin:    { label: 'כניסת מנהל', icon: 'bi-shield-fill',        iconColor: '#C0392B' }
+};
+
+function selectRole(btn) {
+  document.querySelectorAll('.login-role-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  const role = btn.dataset.role;
+  const cfg = roleConfig[role];
+  document.getElementById('loginEmail').value = btn.dataset.email;
+  document.getElementById('loginPassword').value = btn.dataset.pass;
+  const icon = document.getElementById('roleIcon');
+  icon.className = 'bi ' + cfg.icon;
+  icon.style.color = cfg.iconColor;
+  document.getElementById('roleLabel').textContent = cfg.label;
+  document.getElementById('roleLabel').style.color = cfg.iconColor;
+}
+
+// Init with customer tab
+document.addEventListener('DOMContentLoaded', function() {
+  const customerTab = document.querySelector('[data-role="customer"]');
+  if (customerTab) selectRole(customerTab);
+});
+</script>
 
 </main></body></html>
