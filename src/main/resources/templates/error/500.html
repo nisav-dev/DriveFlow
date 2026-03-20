@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="he" dir="rtl"
+      th:replace="~{layout/base :: html(content=~{::main}, pageTitle='שגיאת שרת')}">
+<body><main>
+<div class="container py-5 text-center">
+  <div class="py-5">
+    <i class="bi bi-exclamation-triangle" style="font-size:5rem;color:var(--warning)"></i>
+    <h1 class="fw-800 mt-3" style="color:var(--primary);font-size:4rem">500</h1>
+    <h4 class="fw-700 mb-2" style="color:var(--primary)">שגיאת שרת פנימית</h4>
+    <p class="text-muted mb-4">אירעה שגיאה. אנא נסה שוב מאוחר יותר.</p>
+    <a th:href="@{/}" class="btn btn-primary px-4">
+      <i class="bi bi-house me-1"></i>חזור לדף הבית
+    </a>
+  </div>
+</div>
+</main></body></html>

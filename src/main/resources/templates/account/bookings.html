@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="he" dir="rtl"
+      th:replace="~{layout/base :: html(content=~{::main}, pageTitle='ההזמנות שלי')}">
+<body><main>
+
+<div class="page-hero py-4">
+  <div class="container">
+    <h2 class="fw-800"><i class="bi bi-calendar-check me-2"></i>ההזמנות שלי</h2>
+  </div>
+</div>
+
+<div class="container py-5">
+
+  <div th:if="${#lists.isEmpty(bookings)}" class="text-center py-5">
+    <i class="bi bi-calendar-x" style="font-size:4rem;color:var(--border)"></i>
+    <h4 class="mt-3 fw-700" style="color:var(--primary)">עדיין אין הזמנות</h4>
+    <p class="text-muted">כשתזמין רכב, ההזמנה תופיע כאן</p>
+    <a th:href="@{/search}" class="btn btn-primary mt-2">
+      <i class="bi bi-search me-1"></i>חפש רכב עכשיו
+    </a>
+  </div>
+
+  <div th:unless="${#lists.isEmpty(bookings)}" class="row g-4">
+    <div th:each="booking : ${bookings}" class="col-12">
+      <div class="bg-white rounded-xl p-4 shadow-card">
+        <div class="d-flex flex-wrap gap-3 align-items-start">
+
+          <img class="booking-list-image flex-shrink-0"
+               th:src="${booking.vehicle.imageUrl}"
+               th:alt="${booking.vehicle.displayName}">
+
+          <!-- Details -->
+          <div class="flex-grow-1">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <h6 class="fw-700 mb-0" style="color:var(--primary)" th:text="${booking.vehicle.getDisplayName()}">רכב</h6>
+              <span class="status-badge"
+                    th:classappend="${booking.status.name() == 'CONFIRMED'} ? 'status-confirmed' :
+                                     (${booking.status.name() == 'ACTIVE'} ? 'status-active' :
+                                     (${booking.status.name() == 'COMPLETED'} ? 'status-completed' :
+                                     (${booking.status.name() == 'CANCELLED'} ? 'status-cancelled' : 'status-pending')))"
+                    th:switch="${booking.status.name()}">
+                <span th:case="'PENDING'">ממתין</span>
+                <span th:case="'CONFIRMED'">מאושר</span>
+                <span th:case="'ACTIVE'">פעיל</span>
+                <span th:case="'COMPLETED'">הושלם</span>
+                <span th:case="'COMPLETED_WITH_DAMAGE'">הושלם עם נזק</span>
+                <span th:case="'CANCELLED'">בוטל</span>
+                <span th:case="*" th:text="${booking.status.name()}"></span>
+              </span>
+            </div>
+            <div class="text-muted small mb-2">
+              <i class="bi bi-hash me-1"></i>
+              <span th:text="${booking.bookingNumber}">מספר הזמנה</span>
+            </div>
+
+            <div class="row g-2 small">
+              <div class="col-sm-3">
+                <i class="bi bi-building me-1 text-primary"></i>
+                <span th:text="${booking.pickupBranch.name}">סניף</span>
+              </div>
+              <div class="col-sm-3">
+                <i class="bi bi-calendar3 me-1 text-primary"></i>
+                <span th:text="${#temporals.format(booking.pickupDatetime, 'dd/MM/yyyy')}">תאריך איסוף</span>
+              </div>
+              <div class="col-sm-3">
+                <i class="bi bi-calendar3-event me-1 text-primary"></i>
+                <span th:text="${#temporals.format(booking.returnDatetime, 'dd/MM/yyyy')}">תאריך החזרה</span>
+              </div>
+              <div class="col-sm-3">
+                <i class="bi bi-moon me-1 text-primary"></i>
+                <span th:text="${booking.numDays} + ' ימים'">ימים</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Price + actions -->
+          <div class="text-end flex-shrink-0">
+            <div class="fw-800 mb-1" style="color:var(--primary);font-size:1.2rem"
+                 th:text="'₪' + ${booking.totalPrice}">₪0</div>
+            <div th:if="${booking.isCancellable()}">
+              <form th:action="@{/booking/{id}/cancel(id=${booking.id})}" method="post"
+                    onsubmit="return confirm('האם אתה בטוח שברצונך לבטל הזמנה זו?')">
+                <input type="hidden" name="reason" value="בוטל על ידי הלקוח">
+                <button type="submit" class="btn btn-sm btn-outline-danger rounded-3">
+                  <i class="bi bi-x-circle me-1"></i>ביטול
+                </button>
+              </form>
+            </div>
+            <div th:unless="${booking.isCancellable()}" class="text-muted small">
+              <a th:href="@{/booking/confirmation/{n}(n=${booking.bookingNumber})}" class="btn btn-sm btn-outline-secondary rounded-3">
+                <i class="bi bi-eye me-1"></i>פרטים
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</main></body></html>

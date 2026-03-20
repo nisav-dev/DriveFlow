@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DriveFlow — הזמנת רכב</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/driveflow.css">
+</head>
+<body data-page="booking">
+<nav class="navbar navbar-expand-lg navbar-driveflow sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="index.html"><span class="brand-drive">Drive</span><span class="brand-flow">Flow</span></a>
+    <div class="nav-cta-group ms-auto">
+      <a href="search.html" class="btn btn-outline-white btn-sm">חזרה לתוצאות</a>
+    </div>
+  </div>
+</nav>
+
+<section class="page-hero page-hero-compact py-4">
+  <div class="container">
+    <h1 class="h3 mb-3"><i class="bi bi-calendar-check me-2"></i>השלמת הזמנה</h1>
+    <div class="wizard-progress">
+      <div class="wizard-step done">
+        <div class="step-circle"><i class="bi bi-check"></i></div>
+        <span>בחירת רכב</span>
+      </div>
+      <div class="wizard-line done"></div>
+      <div class="wizard-step active">
+        <div class="step-circle">2</div>
+        <span>תוספות</span>
+      </div>
+      <div class="wizard-line"></div>
+      <div class="wizard-step">
+        <div class="step-circle">3</div>
+        <span>תשלום</span>
+      </div>
+      <div class="wizard-line"></div>
+      <div class="wizard-step">
+        <div class="step-circle">4</div>
+        <span>אישור</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="container py-4 py-lg-5">
+  <div class="row g-4">
+    <section class="col-lg-8">
+      <div class="bg-white rounded-xl p-4 shadow-card mb-4">
+        <div class="section-heading section-heading-inline mb-4">
+          <div>
+            <h2 class="h5 mb-1">פרטי הנהג</h2>
+            <p class="section-subtitle mb-0">המידע ישמש לאישור ההזמנה ולהכנת הרכב</p>
+          </div>
+        </div>
+        <form id="driverForm" class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label" for="driverName">שם מלא</label>
+            <input type="text" class="form-control" id="driverName" value="יוסי כהן" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="driverEmail">אימייל</label>
+            <input type="email" class="form-control" id="driverEmail" value="yossi.cohen@gmail.com" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="driverPhone">טלפון</label>
+            <input type="tel" class="form-control" id="driverPhone" value="050-1234567" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="driverLicense">מספר רישיון</label>
+            <input type="text" class="form-control" id="driverLicense" value="1234567" required>
+          </div>
+        </form>
+      </div>
+
+      <div class="bg-white rounded-xl p-4 shadow-card">
+        <div class="section-heading section-heading-inline mb-4">
+          <div>
+            <h2 class="h5 mb-1">בחר תוספות</h2>
+            <p class="section-subtitle mb-0">בחירה חופשית, המחיר מתעדכן מיד</p>
+          </div>
+        </div>
+        <div class="row g-3" id="extrasGrid">
+          <div class="col-md-6">
+            <label class="extra-item" data-extra-id="gps" data-extra-name="GPS ניווט" data-extra-price="30" data-extra-mode="daily">
+              <input type="checkbox" class="extra-checkbox">
+              <span class="extra-icon">🧭</span>
+              <span class="extra-body">
+                <strong>GPS ניווט</strong>
+                <small>מכשיר ניווט מעודכן לכל תקופת ההשכרה</small>
+              </span>
+              <span class="extra-price">₪30/יום</span>
+            </label>
+          </div>
+          <div class="col-md-6">
+            <label class="extra-item" data-extra-id="child-seat" data-extra-name="כיסא ילדים" data-extra-price="25" data-extra-mode="daily">
+              <input type="checkbox" class="extra-checkbox">
+              <span class="extra-icon">👶</span>
+              <span class="extra-body">
+                <strong>כיסא ילדים</strong>
+                <small>כיסא בטיחות לגילאי 0-3</small>
+              </span>
+              <span class="extra-price">₪25/יום</span>
+            </label>
+          </div>
+          <div class="col-md-6">
+            <label class="extra-item" data-extra-id="insurance" data-extra-name="ביטוח מורחב CDW+" data-extra-price="45" data-extra-mode="daily">
+              <input type="checkbox" class="extra-checkbox">
+              <span class="extra-icon">🛡️</span>
+              <span class="extra-body">
+                <strong>ביטוח מורחב CDW+</strong>
+                <small>כיסוי מורחב להפחתת השתתפות עצמית</small>
+              </span>
+              <span class="extra-price">₪45/יום</span>
+            </label>
+          </div>
+          <div class="col-md-6">
+            <label class="extra-item" data-extra-id="second-driver" data-extra-name="נהג נוסף" data-extra-price="20" data-extra-mode="daily">
+              <input type="checkbox" class="extra-checkbox">
+              <span class="extra-icon">👤</span>
+              <span class="extra-body">
+                <strong>נהג נוסף</strong>
+                <small>אישור נהג נוסף על אותה הזמנה</small>
+              </span>
+              <span class="extra-price">₪20/יום</span>
+            </label>
+          </div>
+          <div class="col-md-6">
+            <label class="extra-item" data-extra-id="fuel" data-extra-name="חבילת דלק מראש" data-extra-price="150" data-extra-mode="fixed">
+              <input type="checkbox" class="extra-checkbox">
+              <span class="extra-icon">⛽</span>
+              <span class="extra-body">
+                <strong>חבילת דלק מראש</strong>
+                <small>החזרה גמישה יותר בסיום ההשכרה</small>
+              </span>
+              <span class="extra-price">₪150</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="booking-actions">
+          <a href="search.html" class="btn btn-outline-secondary">חזור לתוצאות</a>
+          <button type="button" class="btn btn-primary px-4" id="continueToPaymentBtn">המשך לתשלום</button>
+        </div>
+      </div>
+    </section>
+
+    <aside class="col-lg-4">
+      <div class="bg-white rounded-xl p-4 shadow-card sticky-summary">
+        <h2 class="h6 fw-bold mb-3 text-primary">סיכום הזמנה</h2>
+        <img src="https://images.unsplash.com/photo-1590362891991-f776e747a588?w=500&h=280&fit=crop" class="booking-summary-image" alt="רכב נבחר" id="bookingVehicleImage">
+        <h3 class="h5 mb-1" id="bookingVehicleName">Toyota Corolla 2024</h3>
+        <p class="text-muted small mb-3" id="bookingVehicleMeta">Compact · אוטומטי · 5 מושבים</p>
+        <div class="summary-list">
+          <div><span>סניף</span><strong id="bookingBranch">נתב"ג — שדה התעופה</strong></div>
+          <div><span>איסוף</span><strong id="bookingPickup">10.04.2026 10:00</strong></div>
+          <div><span>החזרה</span><strong id="bookingDropoff">15.04.2026 10:00</strong></div>
+          <div><span>משך השכרה</span><strong id="bookingDays">5 ימים</strong></div>
+        </div>
+        <hr>
+        <div class="summary-pricing">
+          <div><span>מחיר בסיס</span><strong id="bookingBaseTotal">₪925</strong></div>
+          <div><span>תוספות</span><strong id="bookingExtrasTotal">₪0</strong></div>
+        </div>
+        <div class="selected-extras-list" id="selectedExtrasList"></div>
+        <hr>
+        <div class="summary-total">
+          <span>סה"כ לתשלום</span>
+          <strong id="bookingGrandTotal">₪925</strong>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="static/js/driveflow-preview.js"></script>
+</body>
+</html>

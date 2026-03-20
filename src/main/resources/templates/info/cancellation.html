@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="he" dir="rtl"
+      th:replace="~{layout/base :: html(content=~{::main}, pageTitle='מדיניות ביטול')}">
+<body><main>
+
+<div class="page-hero py-4">
+  <div class="container">
+    <h2 class="fw-800"><i class="bi bi-x-circle me-2"></i>מדיניות ביטול</h2>
+    <p class="mb-0 opacity-75">ביטול גמיש וללא לחץ</p>
+  </div>
+</div>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <div class="bg-white rounded-xl p-5 shadow-card mb-4">
+
+        <div class="mb-5 p-4 rounded-3 text-center" style="background:linear-gradient(135deg,#E8F8EE,#D4F0E0)">
+          <i class="bi bi-check-circle-fill mb-2" style="font-size:2.5rem;color:#28a745"></i>
+          <h5 class="fw-800 mb-1" style="color:#1a6b35">ביטול חינם עד 48 שעות לפני האיסוף</h5>
+          <p class="text-muted mb-0 small">ללא עמלת ביטול, ללא שאלות</p>
+        </div>
+
+        <h5 class="fw-700 mb-4" style="color:var(--primary)">לוח ביטולים</h5>
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="rounded-3 p-4 text-center h-100" style="background:#E8F8EE;border:2px solid #28a745">
+              <div class="fw-800 mb-1" style="color:#1a6b35;font-size:1.1rem">מעל 48 שעות</div>
+              <div class="fw-800" style="font-size:1.75rem;color:#28a745">חינם</div>
+              <div class="text-muted small mt-1">החזר מלא</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="rounded-3 p-4 text-center h-100" style="background:#FFF9E6;border:2px solid var(--accent)">
+              <div class="fw-800 mb-1" style="color:#8a5c00;font-size:1.1rem">24–48 שעות</div>
+              <div class="fw-800" style="font-size:1.75rem;color:var(--accent)">50%</div>
+              <div class="text-muted small mt-1">חזרה של מחצית המחיר</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="rounded-3 p-4 text-center h-100" style="background:#FDE8E8;border:2px solid #dc3545">
+              <div class="fw-800 mb-1" style="color:#8b0000;font-size:1.1rem">פחות מ-24 שעות</div>
+              <div class="fw-800" style="font-size:1.75rem;color:#dc3545">ללא</div>
+              <div class="text-muted small mt-1">אין החזר כספי</div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="my-4">
+
+        <h5 class="fw-700 mb-3" style="color:var(--primary)">כיצד לבטל הזמנה?</h5>
+        <ol class="text-muted" style="line-height:2.2">
+          <li>היכנס לאזור האישי שלך</li>
+          <li>לחץ על "ההזמנות שלי"</li>
+          <li>מצא את ההזמנה הרלוונטית ולחץ על "בטל הזמנה"</li>
+          <li>אשר את הביטול — ההחזר יזוכה תוך 5–7 ימי עסקים</li>
+        </ol>
+
+        <hr class="my-4">
+
+        <h5 class="fw-700 mb-3" style="color:var(--primary)">אי-הגעה (No-Show)</h5>
+        <p class="text-muted" style="line-height:1.9">
+          לקוח שלא הגיע לאיסוף הרכב ולא ביטל מראש — יחויב בדמי ביטול מלאים. מומלץ ליצור קשר עם הסניף בכל מקרה של עיכוב.
+        </p>
+
+      </div>
+
+      <div class="text-center">
+        <a th:href="@{/my-account/bookings}" class="btn btn-outline-primary px-4 rounded-3 me-2">
+          <i class="bi bi-calendar-check me-1"></i>ההזמנות שלי
+        </a>
+        <a th:href="@{/search}" class="btn btn-primary px-4 rounded-3">
+          <i class="bi bi-search me-1"></i>הזמן רכב חדש
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</main></body></html>

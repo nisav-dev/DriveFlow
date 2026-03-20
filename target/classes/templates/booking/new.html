@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="he" dir="rtl"
+      th:replace="~{layout/base :: html(content=~{::main}, pageTitle='פרטי הזמנה')}">
+<body><main>
+
+<!-- PAGE HERO -->
+<div class="page-hero py-4">
+  <div class="container">
+    <h2 class="mb-3"><i class="bi bi-calendar-check me-2"></i>הזמנת רכב</h2>
+    <div class="d-flex align-items-center gap-0" style="max-width:480px">
+      <div class="wizard-step done">
+        <div class="step-circle"><i class="bi bi-check"></i></div>
+        <span>בחירת רכב</span>
+      </div>
+      <div class="wizard-line done" style="height:2px;flex:1;background:var(--success)"></div>
+      <div class="wizard-step active">
+        <div class="step-circle">2</div>
+        <span>אישור ותשלום</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container py-5">
+  <form th:action="@{/booking/create}" method="post">
+    <input type="hidden" name="vehicleId" th:value="${vehicle.id}">
+    <input type="hidden" name="pickupBranchId" th:value="${pickupBranch.id}">
+    <input type="hidden" name="pickupDate" th:value="${pickupDate}">
+    <input type="hidden" name="returnDate" th:value="${returnDate}">
+
+    <div class="row g-4">
+
+      <!-- LEFT: Vehicle summary + Extras -->
+      <div class="col-lg-8">
+
+        <!-- Vehicle Card -->
+        <div class="bg-white rounded-xl p-4 shadow-card mb-4">
+          <h5 class="fw-700 mb-3" style="color:var(--primary)">
+            <i class="bi bi-car-front me-2"></i>הרכב שנבחר
+          </h5>
+          <div class="d-flex gap-3 align-items-center">
+            <img class="booking-selected-image flex-shrink-0"
+                 th:src="${vehicle.imageUrl}"
+                 th:alt="${vehicle.displayName}">
+            <div class="flex-grow-1">
+              <h5 class="fw-700 mb-1" style="color:var(--primary)" th:text="${vehicle.getDisplayName()}">רכב</h5>
+              <div class="vehicle-specs mb-2">
+                <span class="spec-item"><i class="bi bi-people"></i> <span th:text="${vehicle.numSeats}">5</span> מושבים</span>
+                <span class="spec-item"><i class="bi bi-gear"></i>
+                  <span th:if="${vehicle.transmission.name() == 'AUTOMATIC'}">אוטומטי</span>
+                  <span th:unless="${vehicle.transmission.name() == 'AUTOMATIC'}">ידני</span>
+                </span>
+                <span class="spec-item"><i class="bi bi-fuel-pump"></i>
+                  <span th:switch="${vehicle.fuelType.name()}">
+                    <span th:case="'PETROL'">בנזין</span>
+                    <span th:case="'DIESEL'">דיזל</span>
+                    <span th:case="'HYBRID'">היברידי</span>
+                    <span th:case="'ELECTRIC'">חשמלי</span>
+                    <span th:case="*" th:text="${vehicle.fuelType.name()}"></span>
+                  </span>
+                </span>
+              </div>
+              <span class="badge" style="background:var(--light-bg);color:var(--primary)" th:text="${vehicle.category.name}">Compact</span>
+            </div>
+            <div class="text-end">
+              <div class="price-amount" th:text="'₪' + ${vehicle.dailyRate}">₪185</div>
+              <div class="price-unit">/יום</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pickup Details -->
+        <div class="bg-white rounded-xl p-4 shadow-card mb-4">
+          <h5 class="fw-700 mb-3" style="color:var(--primary)">
+            <i class="bi bi-geo-alt me-2"></i>פרטי איסוף
+          </h5>
+          <div class="row g-3">
+            <div class="col-md-4">
+              <div class="rounded-3 p-3" style="background:var(--light-bg)">
+                <div class="text-muted small mb-1"><i class="bi bi-building me-1"></i>סניף</div>
+                <div class="fw-700" th:text="${pickupBranch.name}">סניף</div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="rounded-3 p-3" style="background:var(--light-bg)">
+                <div class="text-muted small mb-1"><i class="bi bi-calendar3 me-1"></i>איסוף</div>
+                <div class="fw-700" th:text="${#temporals.format(pickupDate, 'dd/MM/yyyy HH:mm')}">תאריך</div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="rounded-3 p-3" style="background:var(--light-bg)">
+                <div class="text-muted small mb-1"><i class="bi bi-calendar3-event me-1"></i>החזרה</div>
+                <div class="fw-700" th:text="${#temporals.format(returnDate, 'dd/MM/yyyy HH:mm')}">תאריך</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Extras -->
+        <div class="bg-white rounded-xl p-4 shadow-card" th:if="${#lists.size(extras) > 0}">
+          <h5 class="fw-700 mb-3" style="color:var(--primary)">
+            <i class="bi bi-plus-circle me-2"></i>תוספות אופציונליות
+          </h5>
+          <div class="row g-3">
+            <div th:each="extra : ${extras}" class="col-md-6">
+              <label class="d-flex gap-3 align-items-start p-3 rounded-3 border cursor-pointer"
+                     style="cursor:pointer;transition:border-color 0.2s">
+                <input type="checkbox" name="extraIds" th:value="${extra.id}" class="form-check-input mt-1 flex-shrink-0"
+                       th:attr="data-price=${extra.calculatePrice(numDays)}">
+                <div class="flex-grow-1">
+                  <div class="fw-700 mb-1">
+                    <i th:class="'bi ' + ${extra.icon} + ' me-1 text-primary'"></i>
+                    <span th:text="${extra.name}">GPS</span>
+                  </div>
+                  <div class="text-muted small" th:text="${extra.description}">תיאור</div>
+                  <div class="mt-1">
+                    <span class="fw-700" style="color:var(--accent)"
+                          th:text="${extra.pricingType.name() == 'FIXED'} ? '₪' + ${extra.fixedPrice} + ' חד-פעמי' : '₪' + ${extra.dailyPrice} + '/יום'">
+                    </span>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Price summary + Submit -->
+      <div class="col-lg-4">
+        <div class="bg-white rounded-xl p-4 shadow-card position-sticky" style="top:80px">
+          <h5 class="fw-700 mb-4" style="color:var(--primary)">
+            <i class="bi bi-receipt me-2"></i>סיכום הזמנה
+          </h5>
+
+          <div class="d-flex justify-content-between small mb-2">
+            <span class="text-muted" th:text="${vehicle.getDisplayName()} + ' × ' + ${numDays} + ' ימים'"></span>
+            <span class="fw-600" id="basePrice" th:text="'₪' + ${vehicle.calculateRentalPrice(numDays)}"></span>
+          </div>
+          <div class="d-flex justify-content-between small mb-2 text-muted" id="extrasTotal">
+            <span>תוספות</span>
+            <span id="extrasTotalValue">₪0</span>
+          </div>
+
+          <hr>
+          <div class="d-flex justify-content-between fw-700 mb-4">
+            <span>סה"כ לתשלום</span>
+            <span style="color:var(--primary);font-size:1.2rem" id="grandTotal"
+                  th:text="'₪' + ${vehicle.calculateRentalPrice(numDays)}"></span>
+          </div>
+
+          <div class="rounded-3 p-3 mb-4" style="background:#FFF9E6;border:1px solid #F0D060">
+            <small><i class="bi bi-info-circle text-warning me-1"></i>ביטול חינם עד 48 שעות לפני האיסוף</small>
+          </div>
+
+          <button type="submit" class="btn btn-search">
+            <i class="bi bi-lock-fill me-2"></i>אישור הזמנה
+          </button>
+          <a th:href="@{/search}" class="btn btn-outline-secondary w-100 mt-2 rounded-3">
+            <i class="bi bi-arrow-right me-1"></i>חזור לחיפוש
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>
+
+<script th:inline="javascript">
+  const basePrice = /*[[${vehicle.calculateRentalPrice(numDays)}]]*/ 0;
+  const grandTotalEl = document.getElementById('grandTotal');
+  const extrasTotalEl = document.getElementById('extrasTotalValue');
+
+  document.querySelectorAll('input[name="extraIds"]').forEach(cb => {
+    cb.addEventListener('change', updateTotals);
+  });
+
+  function updateTotals() {
+    let extrasSum = 0;
+    document.querySelectorAll('input[name="extraIds"]:checked').forEach(cb => {
+      extrasSum += parseFloat(cb.dataset.price) || 0;
+    });
+    extrasTotalEl.textContent = '₪' + extrasSum.toFixed(0);
+    grandTotalEl.textContent = '₪' + (parseFloat(basePrice) + extrasSum).toFixed(0);
+    document.getElementById('extrasTotal').style.display = extrasSum > 0 ? '' : 'none';
+  }
+
+  document.getElementById('extrasTotal').style.display = 'none';
+</script>
+</main></body></html>

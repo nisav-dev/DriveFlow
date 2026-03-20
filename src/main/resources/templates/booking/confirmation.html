@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="he" dir="rtl"
+      th:replace="~{layout/base :: html(content=~{::main}, pageTitle='הזמנה אושרה')}">
+<body><main>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+
+      <!-- Success banner -->
+      <div class="bg-white rounded-xl p-5 shadow-card text-center mb-4">
+        <div style="width:88px;height:88px;background:linear-gradient(135deg,#28A745,#20C04B);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px">
+          <i class="bi bi-check-lg" style="color:#fff;font-size:2.6rem"></i>
+        </div>
+        <h2 class="fw-800 mb-2" style="color:var(--primary)">ההזמנה אושרה!</h2>
+        <p class="text-muted mb-1">מייל אישור ישלח לכתובת המייל שלך</p>
+        <div class="d-inline-block px-4 py-2 rounded-3 mt-2 mb-4"
+             style="background:#EBF3FF;border:2px dashed var(--primary)">
+          <span class="text-muted small">מספר הזמנה: </span>
+          <span class="fw-800 fs-5" style="color:var(--primary)" th:text="${booking.bookingNumber}">DRIVEFLOW-2026-00001</span>
+        </div>
+      </div>
+
+      <!-- Booking details -->
+      <div class="bg-white rounded-xl p-4 shadow-card mb-4">
+        <h5 class="fw-700 mb-4" style="color:var(--primary)">
+          <i class="bi bi-card-checklist me-2"></i>פרטי ההזמנה
+        </h5>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="rounded-3 p-3" style="background:var(--light-bg)">
+              <div class="text-muted small mb-1"><i class="bi bi-car-front me-1"></i>הרכב</div>
+              <div class="fw-700" th:text="${booking.vehicle.getDisplayName()}">רכב</div>
+              <div class="text-muted small" th:text="${booking.vehicle.category.name}">קטגוריה</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="rounded-3 p-3" style="background:var(--light-bg)">
+              <div class="text-muted small mb-1"><i class="bi bi-geo-alt me-1"></i>סניף איסוף</div>
+              <div class="fw-700" th:text="${booking.pickupBranch.name}">סניף</div>
+              <div class="text-muted small" th:text="${booking.pickupBranch.openingHours}">שעות</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="rounded-3 p-3" style="background:var(--light-bg)">
+              <div class="text-muted small mb-1"><i class="bi bi-calendar3 me-1"></i>איסוף</div>
+              <div class="fw-700" th:text="${#temporals.format(booking.pickupDatetime, 'dd/MM/yyyy')}">תאריך</div>
+              <div class="text-muted small" th:text="${#temporals.format(booking.pickupDatetime, 'HH:mm')}">שעה</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="rounded-3 p-3" style="background:var(--light-bg)">
+              <div class="text-muted small mb-1"><i class="bi bi-calendar3-event me-1"></i>החזרה</div>
+              <div class="fw-700" th:text="${#temporals.format(booking.returnDatetime, 'dd/MM/yyyy')}">תאריך</div>
+              <div class="text-muted small" th:text="${#temporals.format(booking.returnDatetime, 'HH:mm')}">שעה</div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="d-flex justify-content-between mb-2 small">
+          <span class="text-muted"
+                th:text="${booking.vehicle.getDisplayName()} + ' × ' + ${booking.numDays} + ' ימים'"></span>
+          <span th:text="'₪' + ${booking.basePrice}">₪0</span>
+        </div>
+        <div th:if="${booking.extrasPrice.compareTo(0) > 0}"
+             class="d-flex justify-content-between mb-2 small">
+          <span class="text-muted">תוספות</span>
+          <span th:text="'₪' + ${booking.extrasPrice}">₪0</span>
+        </div>
+        <div class="d-flex justify-content-between fw-700 border-top pt-3 mt-2">
+          <span>סה"כ</span>
+          <span style="color:var(--primary);font-size:1.15rem" th:text="'₪' + ${booking.totalPrice}">₪0</span>
+        </div>
+      </div>
+
+      <div class="d-flex gap-3 justify-content-center flex-wrap">
+        <a th:href="@{/}" class="btn btn-primary px-4">
+          <i class="bi bi-house me-1"></i>דף הבית
+        </a>
+        <a th:href="@{/my-account/bookings}" class="btn btn-outline-primary px-4">
+          <i class="bi bi-person me-1"></i>ההזמנות שלי
+        </a>
+        <!-- PDF Download -->
+        <a th:href="@{/booking/confirmation/{num}/pdf(num=${booking.bookingNumber})}"
+           class="btn btn-outline-danger px-4" target="_blank">
+          <i class="bi bi-file-earmark-pdf me-1"></i>הורד PDF
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</main></body></html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DriveFlow — תוצאות חיפוש</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/driveflow.css">
+</head>
+<body data-page="search">
+<nav class="navbar navbar-expand-lg navbar-driveflow sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="index.html"><span class="brand-drive">Drive</span><span class="brand-flow">Flow</span></a>
+    <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#searchNav" aria-controls="searchNav" aria-expanded="false" aria-label="פתח תפריט">
+      <i class="bi bi-list text-white fs-4"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="searchNav">
+      <ul class="navbar-nav mx-auto gap-lg-1">
+        <li class="nav-item"><a class="nav-link" href="index.html">דף הבית</a></li>
+        <li class="nav-item"><a class="nav-link active" href="search.html">תוצאות חיפוש</a></li>
+        <li class="nav-item"><a class="nav-link" href="booking.html">הזמנה</a></li>
+        <li class="nav-item"><a class="nav-link" href="admin.html">ניהול</a></li>
+      </ul>
+      <div class="nav-cta-group">
+        <a href="admin.html" class="btn btn-outline-white btn-sm">אזור ניהול</a>
+        <a href="index.html" class="btn btn-gold btn-sm">חיפוש חדש</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="page-hero page-hero-compact">
+  <div class="container">
+    <div class="page-hero-copy">
+      <h1><i class="bi bi-search me-2"></i>חיפוש רכבים</h1>
+      <p>עדכן סניף, טווח תאריכים וסינון כדי לקבל רשימה מדויקת וממוינת.</p>
+    </div>
+    <form class="bg-white rounded-xl p-3 p-lg-4 shadow-card" id="searchForm">
+      <div class="row g-3 align-items-end">
+        <div class="col-md-4">
+          <label class="form-label" for="searchBranch">סניף איסוף</label>
+          <select class="form-select" id="searchBranch" name="branch"></select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label" for="searchPickup">תאריך איסוף</label>
+          <input type="datetime-local" class="form-control" id="searchPickup" name="pickup">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label" for="searchDropoff">תאריך החזרה</label>
+          <input type="datetime-local" class="form-control" id="searchDropoff" name="dropoff">
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-search py-2" type="submit">עדכן</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<main class="container py-4 py-lg-5">
+  <div class="mobile-filters-bar d-lg-none mb-3">
+    <button class="btn btn-outline-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#filtersPanel" aria-expanded="false" aria-controls="filtersPanel">
+      <i class="bi bi-funnel me-1"></i>סינון ומיון
+    </button>
+  </div>
+  <div class="row g-4">
+    <aside class="col-lg-3">
+      <div class="collapse d-lg-block" id="filtersPanel">
+        <div class="bg-white rounded-xl p-4 shadow-card filters-card">
+          <div class="filters-title">
+            <h2><i class="bi bi-funnel me-2"></i>סינון תוצאות</h2>
+            <button class="btn btn-link btn-sm p-0 text-decoration-none" type="button" id="resetFiltersBtn">נקה</button>
+          </div>
+
+          <div class="filter-group">
+            <p class="filter-label">קטגוריה</p>
+            <div class="form-check"><input class="form-check-input category-filter" type="checkbox" value="Mini" id="catMini"><label class="form-check-label" for="catMini">Mini</label></div>
+            <div class="form-check"><input class="form-check-input category-filter" type="checkbox" value="Economy" id="catEconomy"><label class="form-check-label" for="catEconomy">Economy</label></div>
+            <div class="form-check"><input class="form-check-input category-filter" type="checkbox" value="Compact" id="catCompact"><label class="form-check-label" for="catCompact">Compact</label></div>
+            <div class="form-check"><input class="form-check-input category-filter" type="checkbox" value="SUV" id="catSUV"><label class="form-check-label" for="catSUV">SUV</label></div>
+            <div class="form-check"><input class="form-check-input category-filter" type="checkbox" value="Luxury" id="catLuxury"><label class="form-check-label" for="catLuxury">Luxury</label></div>
+          </div>
+
+          <div class="filter-group">
+            <p class="filter-label">תיבת הילוכים</p>
+            <div class="form-check"><input class="form-check-input transmission-filter" type="checkbox" value="אוטומטי" id="transAuto"><label class="form-check-label" for="transAuto">אוטומטי</label></div>
+            <div class="form-check"><input class="form-check-input transmission-filter" type="checkbox" value="ידני" id="transManual"><label class="form-check-label" for="transManual">ידני</label></div>
+          </div>
+
+          <div class="filter-group">
+            <label class="filter-label" for="priceRange">מחיר מקסימלי ליום</label>
+            <input type="range" class="form-range" min="120" max="900" step="5" value="900" id="priceRange">
+            <div class="range-values">
+              <small>₪120</small>
+              <strong id="priceRangeValue">₪900</strong>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <p class="filter-label">תכונות</p>
+            <div class="form-check"><input class="form-check-input feature-filter" type="checkbox" value="Bluetooth" id="featBluetooth"><label class="form-check-label" for="featBluetooth">Bluetooth</label></div>
+            <div class="form-check"><input class="form-check-input feature-filter" type="checkbox" value="מיזוג" id="featAc"><label class="form-check-label" for="featAc">מיזוג</label></div>
+            <div class="form-check"><input class="form-check-input feature-filter" type="checkbox" value="GPS" id="featGps"><label class="form-check-label" for="featGps">GPS</label></div>
+            <div class="form-check"><input class="form-check-input feature-filter" type="checkbox" value="היברידי" id="featHybrid"><label class="form-check-label" for="featHybrid">היברידי</label></div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <section class="col-lg-9">
+      <div class="results-toolbar bg-white rounded-xl p-3 shadow-card mb-4">
+        <div>
+          <p class="results-summary mb-1" id="resultsSummary">טוען תוצאות...</p>
+          <div class="selected-filters" id="selectedFilters"></div>
+        </div>
+        <div class="toolbar-actions">
+          <select class="form-select" id="sortSelect" aria-label="מיין תוצאות">
+            <option value="price-asc">מחיר: נמוך לגבוה</option>
+            <option value="price-desc">מחיר: גבוה לנמוך</option>
+            <option value="name">שם הרכב</option>
+            <option value="popular">פופולריות</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row g-4" id="resultsGrid"></div>
+      <div class="bg-white rounded-xl p-4 shadow-card text-center d-none" id="emptyState">
+        <div class="empty-state-icon"><i class="bi bi-car-front"></i></div>
+        <h2>לא נמצאו רכבים תואמים</h2>
+        <p class="text-muted mb-3">כדאי להרחיב את הסינון או לשנות תאריכים/סניף.</p>
+        <button type="button" class="btn btn-primary" id="emptyResetBtn">נקה סינון</button>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer site-footer-compact">
+  <div class="container">
+    <div class="footer-bottom">
+      <div class="footer-logo"><span class="brand-drive">Drive</span><span class="brand-flow">Flow</span></div>
+      <span>© 2026 DriveFlow. כל הזכויות שמורות.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="static/js/driveflow-preview.js"></script>
+</body>
+</html>

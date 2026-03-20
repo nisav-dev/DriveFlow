@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="he" dir="rtl"
+      th:replace="~{layout/base :: html(content=~{::main}, pageTitle='תנאי השכרה')}">
+<body><main>
+
+<div class="page-hero py-4">
+  <div class="container">
+    <h2 class="fw-800"><i class="bi bi-file-text me-2"></i>תנאי השכרה</h2>
+    <p class="mb-0 opacity-75">עודכן לאחרונה: ינואר 2026</p>
+  </div>
+</div>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <div class="bg-white rounded-xl p-5 shadow-card mb-4">
+
+        <div class="mb-4 p-3 rounded-3 d-flex gap-3" style="background:#EBF3FF;border:1px solid #C5DBF5">
+          <i class="bi bi-info-circle-fill mt-1 flex-shrink-0" style="color:var(--primary)"></i>
+          <span class="small">בעת ביצוע הזמנה, השוכר מאשר שקרא והבין את תנאי ההשכרה המפורטים להלן.</span>
+        </div>
+
+        <h5 class="fw-700 mb-3" style="color:var(--primary)">1. דרישות לשוכר</h5>
+        <ul class="text-muted" style="line-height:2">
+          <li>גיל מינימלי לשכירות: 21 שנים (24 לרכבי פרימיום)</li>
+          <li>רישיון נהיגה בתוקף לפחות שנה אחת</li>
+          <li>כרטיס אשראי על שם השוכר לחיוב הפיקדון</li>
+          <li>תעודת זהות ישראלית או דרכון בתוקף</li>
+          <li>תושבי חוץ נדרשים גם לרישיון נהיגה בינלאומי</li>
+        </ul>
+
+        <hr class="my-4">
+
+        <h5 class="fw-700 mb-3" style="color:var(--primary)">2. פיקדון ותשלום</h5>
+        <ul class="text-muted" style="line-height:2">
+          <li>פיקדון נחסם (לא נגבה) בכרטיס האשראי בעת האיסוף</li>
+          <li>גובה הפיקדון תלוי בקטגוריית הרכב (₪500–₪3,000)</li>
+          <li>הפיקדון משוחרר תוך 5 ימי עסקים לאחר החזרת הרכב</li>
+          <li>החיוב הסופי בעת החזרת הרכב לאחר בדיקה</li>
+        </ul>
+
+        <hr class="my-4">
+
+        <h5 class="fw-700 mb-3" style="color:var(--primary)">3. דלק ומרחק</h5>
+        <ul class="text-muted" style="line-height:2">
+          <li>הרכב מסופק עם מיכל מלא — יש להחזירו עם מיכל מלא</li>
+          <li>מרחק נסיעה: ללא הגבלה בכל ההשכרות</li>
+          <li>נסיעה מחוץ לישראל אסורה ללא אישור מראש בכתב</li>
+        </ul>
+
+        <hr class="my-4">
+
+        <h5 class="fw-700 mb-3" style="color:var(--primary)">4. ביטוח ואחריות</h5>
+        <ul class="text-muted" style="line-height:2">
+          <li>כל הרכבים מבוטחים בביטוח חובה וצד ג' מלא</li>
+          <li>ניתן לרכוש ביטוח מקיף מלא בעלות יומית נוספת</li>
+          <li>הפחתת השתתפות עצמית זמינה דרך תוספות ההזמנה</li>
+          <li>נזקים הנובעים מנהיגה רשלנית אינם מכוסים</li>
+        </ul>
+
+        <hr class="my-4">
+
+        <h5 class="fw-700 mb-3" style="color:var(--primary)">5. שעות פעילות</h5>
+        <ul class="text-muted" style="line-height:2">
+          <li>שעות הפעילות משתנות לפי סניף — ראה דף הסניפים</li>
+          <li>איסוף מחוץ לשעות — בתיאום מראש ובתשלום נוסף</li>
+          <li>החזרה מאוחרת של מעל שעה תחויב ביום נוסף</li>
+        </ul>
+
+      </div>
+
+      <div class="text-center">
+        <a th:href="@{/faq}" class="btn btn-outline-primary px-4 rounded-3 me-2">
+          <i class="bi bi-question-circle me-1"></i>שאלות נפוצות
+        </a>
+        <a th:href="@{/search}" class="btn btn-primary px-4 rounded-3">
+          <i class="bi bi-search me-1"></i>הזמן רכב
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</main></body></html>
